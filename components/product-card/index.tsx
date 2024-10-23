@@ -4,6 +4,7 @@ import { Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { IProduct } from '@/types'
 import AddToCartButton from '../add-to-cart-button'
 import { useProduct } from '@/hooks/useProduct'
+import ThemedText from '../themed-text'
 
 type Props = {
     product: IProduct
@@ -23,7 +24,7 @@ const ProductCard = (props: Props) => {
                         style={{ width: 100, height: 100 }}
                     />
                 </Block>
-                <Text style={styles.productName}>{product.name}</Text>
+                <ThemedText style={styles.productName}>{product.name}</ThemedText>
 
                 <Block style={styles.addToCartButton}>
                     <AddToCartButton title="Add to Cart" onPress={() => addProductToCart(product)} />

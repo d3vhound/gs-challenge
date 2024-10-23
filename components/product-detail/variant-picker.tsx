@@ -38,7 +38,7 @@ const ProductVariantPicker = (props: Props) => {
         <Button 
             key={variant} 
             title={variant}
-            style={styles.variant}
+            style={[styles.variant, selectedVariant !== variant ? { opacity: 0.5 } : {}]}
             variant={selectedVariant === variant ? 'primary' : 'secondary'}
             onPress={() => setSelectedVariant(variant)}
           />

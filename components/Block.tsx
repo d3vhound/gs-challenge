@@ -1,6 +1,7 @@
 import { Colors } from "@/constants/Colors";
+import { useThemeColor } from "@/hooks/useThemeColor";
 import React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView, useColorScheme } from "react-native";
 import { StyleSheet, View, ViewProps, ViewStyle } from "react-native";
 
 interface IBlock extends ViewProps {
@@ -65,6 +66,7 @@ const Block = ({
   shadow,
   ...props
 }: IBlock) => {
+  const theme = useColorScheme() ?? 'light';
   const blockStyle = StyleSheet.flatten([
     flex !== undefined && { flex },
     row && { flexDirection: "row" },
@@ -89,10 +91,10 @@ const Block = ({
       backgroundColor: 'transparent',
     },
     card && {
-      backgroundColor: Colors.light.background,
+      backgroundColor: Colors[theme].background,
       padding: 10,
       borderWidth: 1,
-      borderColor: Colors.light.border,
+      borderColor: Colors[theme].border,
       borderRadius: 10,
     },
     radius !== undefined && { borderRadius: radius },

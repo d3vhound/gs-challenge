@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, TextInput, StyleSheet, ScrollView } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, TextInput, StyleSheet, ScrollView, useColorScheme } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 import { useCartStore } from '@/stores/cart';
 import CartItem from '@/components/cart/cart-item';
@@ -7,6 +7,7 @@ import Block from '@/components/Block';
 import Button from '@/components/button';
 import { Colors } from '@/constants/Colors';
 import { toast } from 'sonner-native';
+import { useNavigation } from 'expo-router';
 
 type FormData = {
   name: string;
@@ -16,6 +17,8 @@ type FormData = {
 };
 
 const Checkout = () => {
+  const navigation = useNavigation();
+  const theme = useColorScheme() ?? 'light';
   const { cart, clearCart } = useCartStore();
   const { control, handleSubmit, formState: { errors }, reset } = useForm({
     defaultValues: {
@@ -40,6 +43,21 @@ const Checkout = () => {
     });
   };
 
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitleStyle: {
+        color: Colors[theme].text,
+      },
+      headerTintColor: Colors[theme].text,
+    });
+  }, []);
+
+  const themedInputStyle = {
+    borderColor: Colors[theme].border,
+    color: Colors[theme].text,
+    backgroundColor: Colors[theme].input,
+  }
+
   return (
     <ScrollView style={styles.container}>
       {cart.map((item) => (
@@ -54,7 +72,7 @@ const Checkout = () => {
           rules={{ required: "Name is required" }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              style={styles.input}
+              style={[styles.input, themedInputStyle]}
               placeholder="Name"
               onBlur={onBlur}
               onChangeText={onChange}
@@ -76,7 +94,7 @@ const Checkout = () => {
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              style={styles.input}
+              style={[styles.input, themedInputStyle]}
               placeholder="Phone"
               onBlur={onBlur}
               onChangeText={onChange}
@@ -93,7 +111,7 @@ const Checkout = () => {
           rules={{ required: "Address is required" }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              style={styles.input}
+              style={[styles.input, themedInputStyle]}
               placeholder="Shipping Address"
               onBlur={onBlur}
               onChangeText={onChange}
@@ -116,7 +134,7 @@ const Checkout = () => {
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              style={styles.input}
+              style={[styles.input, themedInputStyle]}
               placeholder="Credit Card Number"
               onBlur={onBlur}
               onChangeText={onChange}
@@ -150,7 +168,6 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: Colors.light.border,
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,

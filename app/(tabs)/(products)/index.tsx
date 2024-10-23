@@ -1,4 +1,4 @@
-import { StyleSheet, FlatList, TextInput, View } from 'react-native';
+import { StyleSheet, FlatList, TextInput, View, useColorScheme } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Ionicons } from '@expo/vector-icons';
@@ -14,17 +14,24 @@ export default function HomeScreen() {
   const router = useRouter();
   const { products } = useProductStore();
   const [searchQuery, setSearchQuery] = useState('');
+  const theme = useColorScheme() ?? 'light';
 
   const { data } = useQuery({
     queryKey: ['products', searchQuery],
     queryFn: () => products.filter((product) => product.name.toLowerCase().includes(searchQuery.toLowerCase())),
   });
 
+  const themedInputStyle = {
+    borderColor: Colors[theme].border,
+    color: Colors[theme].text,
+    backgroundColor: Colors[theme].input,
+  }
+
   return (
     <SafeAreaView style={{ paddingHorizontal: 20 }}>
-      <View style={styles.searchContainer}>
-        <Ionicons name="search" size={16} color={Colors.light.icon} />
-        <TextInput value={searchQuery} onChangeText={setSearchQuery} style={{ marginLeft: 10 }} placeholder="Search games, consoles, and more" />
+      <View style={[styles.searchContainer, themedInputStyle]}>
+        <Ionicons name="search" size={16} color={Colors[theme].icon} />
+        <TextInput value={searchQuery} onChangeText={setSearchQuery} style={{ marginLeft: 10, color: Colors[theme].text }} placeholder="Search games, consoles, and more" />
       </View>
       <FlatList
         style={{ marginTop: 10, height: '100%' }}
@@ -46,7 +53,6 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   searchContainer: {
-    backgroundColor: Colors.light.input,
     height: 45.0,
     flexDirection: "row",
     alignItems: "center",

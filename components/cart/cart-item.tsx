@@ -4,6 +4,7 @@ import { CartProduct, useCartStore } from '@/stores/cart'
 import Block from '../Block'
 import { Colors } from '@/constants/Colors'
 import { Ionicons } from '@expo/vector-icons'
+import ThemedText from '../themed-text'
 
 type Props = {
     cart_product: CartProduct
@@ -21,9 +22,9 @@ const CartItem = (props: Props) => {
     <Block row card>
       <Image source={{ uri: cart_product.image }} style={styles.image} />
       <Block style={styles.info}>
-        <Text style={styles.name}>{cart_product.name}</Text>
-        <Text style={styles.variant}>{cart_product.selected_variant}</Text>
-        <Text style={styles.quantity}>Quantity: {cart_product.quantity}</Text>
+        <ThemedText style={styles.name}>{cart_product.name}</ThemedText>
+        <ThemedText style={styles.variant}>{cart_product.selected_variant}</ThemedText>
+        <ThemedText style={styles.quantity}>Quantity: {cart_product.quantity}</ThemedText>
       </Block>
       <Block style={styles.remove}>
         <TouchableOpacity onPress={handleRemove}>
@@ -53,11 +54,9 @@ const styles = StyleSheet.create({
   },
   variant: {
     fontSize: 14,
-    color: Colors.light.text
   },
   quantity: {
     fontSize: 14,
-    color: Colors.light.text
   },
   remove: {
     marginRight: 10,

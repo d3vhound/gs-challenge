@@ -5,11 +5,12 @@ import EmptyCart from '@/components/cart/empty-cart';
 import { Colors } from '@/constants/Colors';
 import { useCartStore } from '@/stores/cart';
 import { useRouter } from 'expo-router';
-import { StyleSheet, SafeAreaView, Text, FlatList } from 'react-native';
+import { StyleSheet, SafeAreaView, Text, FlatList, useColorScheme } from 'react-native';
 
 export default function CartScreen() {
   const { cart, clearCart } = useCartStore();
   const router = useRouter();
+  const theme = useColorScheme() ?? 'light';
 
   return (
     <SafeAreaView>
@@ -26,7 +27,7 @@ export default function CartScreen() {
           return (
             <Block style={{ marginTop: 20 }}>
               <Button style={{ marginBottom: 10 }} title="Proceed to Checkout" onPress={() => router.push('/checkout')} />
-              <Button style={{ backgroundColor: Colors.light.destructive }} title="Clear Cart" onPress={() => clearCart()} />
+              <Button style={{ backgroundColor: Colors[theme].destructive }} title="Clear Cart" onPress={() => clearCart()} />
             </Block>
           )
         }}
