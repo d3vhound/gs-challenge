@@ -8,6 +8,7 @@ import Button from '@/components/button';
 import { Colors } from '@/constants/Colors';
 import { toast } from 'sonner-native';
 import { useNavigation } from 'expo-router';
+import EmptyCart from '@/components/cart/empty-cart';
 
 type FormData = {
   name: string;
@@ -20,7 +21,7 @@ const Checkout = () => {
   const navigation = useNavigation();
   const theme = useColorScheme() ?? 'light';
   const { cart, clearCart } = useCartStore();
-  const { control, handleSubmit, formState: { errors }, reset } = useForm({
+  const { control, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm({
     defaultValues: {
       name: '',
       phone: '',
@@ -41,6 +42,10 @@ const Checkout = () => {
         error: 'Failed to submit order',
         loading: 'Submitting order...'
     });
+
+    return new Promise((resolve) => {
+        setTimeout(resolve, 2000);
+    })
   };
 
   useEffect(() => {
@@ -66,9 +71,10 @@ const Checkout = () => {
         </Block>
       ))}
 
-      <Block card style={styles.form}>
-        <Controller
-          control={control}
+      {cart.length > 0 ? (
+        <Block card style={styles.form}>
+          <Controller
+            control={control}
           rules={{ required: "Name is required" }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
@@ -145,9 +151,12 @@ const Checkout = () => {
           name="creditCard"
         />
         {errors.creditCard && <Text style={styles.errorText}>{errors.creditCard.message}</Text>}
-      </Block>
+        </Block>
+      ) : (
+        <EmptyCart />
+      )}
 
-      <Button disabled={Object.keys(errors).length > 0 || cart.length === 0} title="Place Order" onPress={handleSubmit(onSubmit)} style={styles.submitButton} />
+      <Button disabled={Object.keys(errors).length > 0 || cart.length === 0 || isSubmitting} title="Place Order" onPress={handleSubmit(onSubmit)} style={styles.submitButton} />
     </ScrollView>
   );
 };
