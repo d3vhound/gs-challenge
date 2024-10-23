@@ -1,0 +1,28 @@
+{
+    "products": [
+        {
+            "id": "1",
+            "name": "Game A",
+            "image": "https://res.cloudinary.com/dtnhykz6r/image/upload/v1729541425/bo6-game-image_ac6ywi.jpg",
+            "type": "video games",
+            "variations": ["Digital", "New", "Pre-Owned"],
+            "details": "Description of Game A."
+        },
+        {
+            "id": "2",
+            "name": "Shirt B",
+            "image": "https://res.cloudinary.com/dtnhykz6r/image/upload/v1729541425/silent-hill-shirt_ljgmez.jpg",
+            "type": "clothing",
+            "variations": ["Small", "Medium", "Large"],
+            "details": "Description of Shirt B."
+        },
+        {
+            "id": "3",
+            "name": "Console C",
+            "image": "https://res.cloudinary.com/dtnhykz6r/image/upload/v1729541425/ps5-image_cj51pa.jpg",
+            "type": "console",
+            "variations": ["New", "Pre-Owned", "Refurbished"],
+            "details": "Description of Console C."
+        }
+    ]
+}
